@@ -11,8 +11,9 @@ app.use(cors());
 const repositories = [
   {
     id: '123123',
-    name: 'Project name',
-    description: 'Project description',
+    title: 'Project title',
+    url: 'Project description',
+    techs: ["React", "Node.js"],
     amountLikes: 0
   }
 ];
@@ -22,12 +23,13 @@ app.get("/repositories", (request, response) => {
 });
 
 app.post("/repositories", (request, response) => {
-  const { name, description } = request.body;
+  const { title, url, techs } = request.body;
 
   const newRepository = {
     id: uuid(),
-    name,
-    description,
+    title,
+    url,
+    techs,
     amountLikes: 0,
   }
 
@@ -37,7 +39,7 @@ app.post("/repositories", (request, response) => {
 });
 
 app.put("/repositories/:id", (request, response) => {
-  const { name, description } = request.body;
+  const { title, url, techs } = request.body;
   const { id } = request.params;
 
   const repositoryIndex = repositories.findIndex(repo => repo.id === id);
@@ -47,7 +49,7 @@ app.put("/repositories/:id", (request, response) => {
   }
 
   const oldRepository = repositories[repositoryIndex];
-  const newRepository = { ...oldRepository, name, description };
+  const newRepository = { ...oldRepository, title, url, techs };
 
   repositories[repositoryIndex] = newRepository;
 
